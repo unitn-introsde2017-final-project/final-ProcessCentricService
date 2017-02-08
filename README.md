@@ -57,7 +57,9 @@ Example for update:
 ```json
 {
   "id": 10,
-  "number": 6021
+  "date": "2017-01-31",
+  "number": 6021,
+  "personId": 2
 }
 ```
 
@@ -112,9 +114,11 @@ Database: introsde
 The database model looks like this:
 
 ![Image of the DB model](http://salaander.hu/sde/sde_db.png)
-Problems to solve:
 
-JPA caches the results, so if there is a data update outside the Database Service process it won't be reflected for a time.
+
+**Problems to solve:**
+
+* JPA caches the results, so if there is a data update outside the Database Service process it won't be reflected for a time.
 
 ## Heroku deployment
 

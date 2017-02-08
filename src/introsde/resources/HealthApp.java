@@ -27,7 +27,7 @@ public class HealthApp {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String sayHelloHtml() {
-        return "{\"Application name\": \"Health App\", \"Copyright\": \"Sándor Tibor Nagy\", \"Matricola\":\"188895\", \"Project\":\"Introduction to Service Design and Engineering\", \"Documentation\":\"https://github.com/unitn-introsde2017-final-project\"}";
+        return "{\"Application name\": \"Health App\", \"Copyright\": \"Sandor Tibor Nagy\", \"Matricola\":\"188895\", \"Project\":\"Introduction to Service Design and Engineering\", \"Documentation\":\"https://github.com/unitn-introsde2017-final-project\"}";
     }
     
     // When client wants HTML
