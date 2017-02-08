@@ -1,6 +1,6 @@
 # Health Application
 
-[Heroku]() | [GitHub](https://github.com/unitn-introsde2017-final-project)
+[Heroku](https://final-process-service.herokuapp.com/healthapp) | [GitHub](https://github.com/unitn-introsde2017-final-project)
 
 
 ## API Calls
@@ -26,21 +26,46 @@ Shows all the relevant information related to a profile:
   * Name / City / Birthday / Step goal 
 * Step informations (steps per day history)
   * Motivation text if step goal not reach for the day
-  * Number of days in the last week when the person reached the stepgoal
+  * Motivation to keep moving if the goal is reached
 * Weather information to the set City in the profile
-  * Text detailing weather conditions wheter to go outside or not
+  * Text detailing weather conditions whether to go outside or not
 
 ```json
-...
+{
+  "stepGoal": 6000,
+  "weather_info": "The temperature is -4 C",
+  "birthdate": "1992-05-06",
+  "city": "Trento,it",
+  "name": "Nagy Sándor Tibor",
+  "id": 1,
+  "steps": [
+    {
+      "date": "2017-01-25",
+      "number": 6019,
+      "personId": 1,
+      "id": 1
+    },
+    ...
+    {
+      "date": "2017-02-08",
+      "number": 3000,
+      "personId": 1,
+      "id": 11
+    }
+  ],
+  "steps_today": "You only need to do a little more to reach your goal, you already made 3000 steps today!"
+}
 ```
+
+Possible ways to improve user experience:
+* Keep track of the most days in a row when the user managed to reach the daily goal
+  * The client has all the step history for a user so to implement this is not a big deal
+* Implement some community features so people can share their results and help motivate their friends to push their limits
+* Add new measurements
 
 ### /healthapp/addUpdateStepCount
 
 Add or update step information for a person.
-
-You need the person's ID, the date for the step count and the number of steps.  
-If there is no entry for the given day it will be created (for this id is not required)  
-If there is an entry already you need to send the request with it to update the number  
 
 Example for create:
 
@@ -101,36 +126,20 @@ diagram about the service connections
 
 [Heroku](https://final-weather-adapter.herokuapp.com/ws/weather?wsdl) | [GitHub](https://github.com/unitn-introsde2017-final-project/final-WeatherAdapter)
 
-## Database
-
-I used MySQL as my database since SQLite is not good for Heroku as with every application reset the database would be gone.  
-Since the default solution offered for the free version of Heroku did not sit well with me, I installed and set-up a MySQL server on my home server with the following details for this project:
-
-Host: salaander.hopto.org  
-User: 'introsde'@'%'  
-Password: introSDE123!  
-Database: introsde  
-
-The database model looks like this:
-
-![Image of the DB model](http://salaander.hu/sde/sde_db.png)
-
-
-**Problems to solve:**
-
-* JPA caches the results, so if there is a data update outside the Database Service process it won't be reflected for a time.
-
 ## Heroku deployment
 
 For Heroku deployment I used this buildpack: [heroku-buildpack-ant](https://github.com/IntroSDE/heroku-buildpack-ant)
 
 Created the applications with this command:  
-`heroku apps:create final-storage-service --region eu --stack cedar --buildpack https://github.com/IntroSDE/heroku-buildpack-ant.git`  
-This way the program had a name I wanted, was created in the EU region which makes response time better and uses the cedar stack with our ant buildpack.
+```
+heroku apps:create ServiceName --region eu --stack cedar --buildpack https://github.com/IntroSDE/heroku-buildpack-ant.git
+```
+
+This way the program had the name I wanted not some random generated name, was created in the EU region which makes response times better and uses the cedar stack with our ant buildpack.
 
 I published my services by using the Heroku GIT way: `git push heroku master`
 
 
 ## Copyright
 
-This service was made by Sándor Tibor Nagy as the final project for Introduction to Service Design and Engineering class at UNITN. 2016/2017
+&copy; Sándor Tibor Nagy as the final project for Introduction to Service Design and Engineering course 2016/2017 at [UNITN](http://www.unitn.it/)
