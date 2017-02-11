@@ -110,7 +110,7 @@ Not yet implemented.
 
 ### Service connections
 
-diagram about the service connections
+![Image of the Service orchestration](http://salaander.hu/sde/sde_final_project.png)
 
 ### Process Centric Service
 
