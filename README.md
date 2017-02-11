@@ -5,7 +5,7 @@
 
 ## API Calls
 
-### /healthapp
+### /healthapp [GET]
 
 Return basic information about the application.
 
@@ -19,7 +19,7 @@ Return basic information about the application.
 }
 ```
 
-### /healthapp/getPersonProfile
+### /healthapp/getPersonProfile [GET]
 
 Shows all the relevant information related to a profile:
 * Profile and personal informations like
@@ -63,7 +63,7 @@ Possible ways to improve user experience:
 * Implement some community features so people can share their results and help motivate their friends to push their limits
 * Add new measurements
 
-### /healthapp/addUpdateStepCount
+### /healthapp/addUpdateStepCount [PUT]
 
 Add or update step information for a person.
 
@@ -88,14 +88,20 @@ Example for update:
 }
 ```
 
-### /healthapp/updateProfile
+### /healthapp/updateProfile [POST]
 
 You can change the person private details and step goal here.
 
 Example request:
 
 ```json
-...
+{
+  "id": 3,
+  "birthdate": "1990-05-19",
+  "city": "Debrecen,hu",
+  "name": "Teszt Remote",
+  "stepGoal": 4517
+}
 ```
 
 Not yet implemented.
@@ -138,7 +144,6 @@ heroku apps:create ServiceName --region eu --stack cedar --buildpack https://git
 This way the program had the name I wanted not some random generated name, was created in the EU region which makes response times better and uses the cedar stack with our ant buildpack.
 
 I published my services by using the Heroku GIT way: `git push heroku master`
-
 
 ## Copyright
 

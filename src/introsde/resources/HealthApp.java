@@ -7,6 +7,7 @@ import javax.json.JsonReader;
 import javax.tools.JavaFileObject;*/
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -70,13 +71,34 @@ public class HealthApp {
 		return response_text;
     }
     
+    @POST
+    @Path("/UserProfile") // you can pass path params to a service
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public String addUpdateProfile(@QueryParam("userId") int userId, String payload) {
+    	System.out.println("--> /addUpdateProfile called with userId = "+userId+" and payload:");
+    	System.out.println(payload);
+    	
+    	// Get JSON from the payload
+    	JSONObject json_data = new JSONObject(payload);
+    	
+    	// Pass the data to the Storage Layer
+    	ClientConfig clientConfig = new ClientConfig();
+        Client client = ClientBuilder.newClient(clientConfig);
+        WebTarget service = client.target(getStorageURI());
+        
+        String response_text = service.path("UserProfile").queryParam("userId", userId).request().accept(MediaType.APPLICATION_JSON).post(Entity.json(json_data.toString())).readEntity(String.class);
+        
+		return response_text;
+	}
+    
     private static URI getBusinessURI() {
-        return UriBuilder.fromUri("http://localhost:9005/business").build();
-		//return UriBuilder.fromUri("http://final-business-service.herokuapp.com/business").build();
+        //return UriBuilder.fromUri("http://localhost:9005/business").build();
+		return UriBuilder.fromUri("http://final-business-service.herokuapp.com/business").build();
     }
     
     private static URI getStorageURI() {
-        return UriBuilder.fromUri("http://localhost:9001/StorageService").build();
-		//return UriBuilder.fromUri("http://final-storage-service.herokuapp.com/StorageService").build();
+        //return UriBuilder.fromUri("http://localhost:9001/StorageService").build();
+		return UriBuilder.fromUri("http://final-storage-service.herokuapp.com/StorageService").build();
     }
 }
